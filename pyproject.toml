@@ -1,0 +1,71 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "generate-conda-badges"
+version = "0.1"
+description = "Generate shields.io badge URLs for monthly conda downloads"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "click",
+    "dask[dataframe]",
+    "fastparquet",
+    "s3fs",
+]
+authors = [
+  {email = "info@bokeh.org"},
+  {name = "Bokeh Team"}
+]
+license = {file = "LICENSE.txt"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Utilities",
+]
+
+[project.urls]
+repository = "https://github.com/bokeh/badges"
+
+[project.scripts]
+generate-conda-badges = "generate_conda_badges.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.coverage.run]
+source = ["generate_conda_badges"]
+
+[tool.mypy]
+python_version = "3.10"
+files = ["src/generate-conda-badges", "tests"]
+
+strict = true
+
+# https://github.com/pallets/click/issues/1879
+disallow_untyped_decorators = false
+
+pretty = true
+show_column_numbers = true
+show_error_codes = true
+show_error_context = true
+
+disallow_any_unimported = true
+implicit_reexport = true
+namespace_packages = true
+warn_return_any = false
+warn_unreachable = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+]
