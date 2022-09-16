@@ -37,5 +37,5 @@ jobs:
         run: |
           git config --local user.name "bokeh"
           git add cache/bokeh-conda-monthly.svg
-          git commit -m"update bokeh-conda-monthly.svg"
+          git diff-index --quiet HEAD || git commit -m"update bokeh-conda-monthly.svg"
           git push
