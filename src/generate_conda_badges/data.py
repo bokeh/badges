@@ -18,17 +18,14 @@ if TYPE_CHECKING:
 __all__ = ("get_package_counts_for_month",)
 
 
-BUCKET_BASE = "s3://anaconda-package-data/conda/hourly"
+BUCKET_BASE = "s3://anaconda-package-data/"
 
-BUCKET_URL = "{bucket_base}/{year}/{month:02d}/{year}-{month:02d}-*.parquet"
+MONTHLY_URL = BUCKET_BASE + "conda/monthly/{year}/{year}-{month:02d}.parquet"
 
 
 def get_package_counts_for_month(month: date) -> Any:
-    url = (
-        BUCKET_URL.format(bucket_base=BUCKET_BASE, year=month.year, month=month.month),
-    )
     counts = dd.read_parquet(
-        url,
+        MONTHLY_URL.format(year=month.year, month=month.month),
         storage_options={"anon": True},
         columns=("pkg_name", "counts"),
     )
