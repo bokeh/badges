@@ -1,5 +1,8 @@
 # badges
+
 Generate and cache informational badges
+
+Install with `pip install .` 
 
 ### Conda 
 
