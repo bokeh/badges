@@ -26,6 +26,7 @@ jobs:
           echo "BADGE_URL=\"`generate-conda-badges -p bokeh --logo anaconda -c D98B42 |jq -r '.bokeh'`\"" >> $GITHUB_ENV
           
       - name: Print badge URL
+        run: |
           echo "$BADGE_URL"
 
       - name: Download badge SVG
