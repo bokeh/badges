@@ -24,7 +24,7 @@ jobs:
       - name: Generate badge URL
         run: |
           echo "BADGE_URL=\"`generate-conda-badges -p bokeh --logo anaconda -c D98B43 |jq -r '.bokeh'`\"" >> $GITHUB_ENV
-          echo "BADGE_URL=${{ env.BADGE_URL }}"
+          echo ${{ env.BADGE_URL }}
 
       - name: Download badge SVG
         run: |
@@ -32,6 +32,7 @@ jobs:
 
       - name: Commit new badge SVG
         run: |
+          git config --local user.name "bokeh"
           git add cache/bokeh-conda-monthly.svg
           git commit -m"update bokeh-conda-monthly.svg"
           git push
