@@ -18,7 +18,7 @@ authors = [
   {email = "info@bokeh.org"},
   {name = "Bokeh Team"}
 ]
-license = {file = "LICENSE.txt"}
+license = {file = "LICENSE"}
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
