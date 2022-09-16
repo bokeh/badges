@@ -1,0 +1,33 @@
+name: update-conda-badge
+
+on:
+  schedule:
+    - cron: "0 12 2 * *"
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install generate-conda-badges
+        run: |
+          pip install .
+
+      - name: Generate badge URL
+        run: |
+          echo "BADGE_URL=\"`generate-conda-badges -p bokeh --logo anaconda -c D98B43 |jq -r '.bokeh'`\"" >> $GITHUB_ENV
+          echo "BADGE_URL=${{ env.BADGE_URL }}"
+
+      - name: Download badge SVG
+        run: |
+          wget ${{ env.BADGE_URL }} -O cache/bokeh-conda-monthly.svg
+
+      - name: Commit new badge SVG
+        run: |
+          git add cache/bokeh-conda-monthly.svg
+          git commit -m"update bokeh-conda-monthly.svg"
+          git push
