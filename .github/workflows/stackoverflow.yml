@@ -23,7 +23,7 @@ jobs:
 
       - name: Generate badge URL
         run: |
-          echo "BADGE_URL=\"`generate-so-badges -t bokeh --logo stackoverflow -c D98B43 |jq -r '.bokeh'`\"" >> $GITHUB_ENV
+          echo "BADGE_URL=\"`generate-so-badges -t bokeh --logo stackoverflow -c blue |jq -r '.bokeh'`\"" >> $GITHUB_ENV
 
       - name: Print badge URL
         run: |
