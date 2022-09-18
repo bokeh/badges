@@ -8,36 +8,25 @@ from __future__ import annotations
 
 # Standard library imports
 import json
-from datetime import date, timedelta
 
 # External imports
 import click
 
-from . import get_badges_for_packages
+from ..shields import STYLES
+from . import get_badges_for_tags
 
 __all__ = ("main",)
 
-STYLES = ("plastic", "flat", "flat-square", "for-the-badge", "social")
 
-
-@click.command(
-    help="Generate shields.io badge URLs with monthly conda package download numbers"
-)
+@click.command(help="Generate shields.io badge URLs with total SQ questions for a tag")
 @click.option(
-    "--package",
-    "-p",
-    "packages",
+    "--tag",
+    "-t",
+    "tags",
     multiple=True,
     default=["bokeh"],
     show_default=True,
-    help="Conda package name to generate a badge for",
-)
-@click.option(
-    "--month",
-    "-m",
-    default=None,
-    type=click.DateTime(formats=["%Y-%m"]),
-    help="A month to collect data for expressed as YYYY-MM",
+    help="SO tag to generate a badge for",
 )
 @click.option(
     "--color",
@@ -57,7 +46,7 @@ STYLES = ("plastic", "flat", "flat-square", "for-the-badge", "social")
 @click.option(
     "--label",
     "-l",
-    default="conda",
+    default="stackoverflow",
     show_default=True,
     help="Label for the badge. If '__name__' is passed, use package names for each label",
 )
@@ -68,17 +57,10 @@ STYLES = ("plastic", "flat", "flat-square", "for-the-badge", "social")
     help="A shields.io named logo for the badge",
 )
 def main(
-    packages: list[str],
-    month: date | None,
+    tags: list[str],
     color: str,
     style: str,
     label: str,
     logo: str,
 ) -> None:
-    month = month or date.today().replace(day=1) - timedelta(days=1)
-    print(
-        json.dumps(
-            get_badges_for_packages(packages, month, color, style, label, logo),
-            indent=2,
-        )
-    )
+    print(json.dumps(get_badges_for_tags(tags, color, style, label, logo), indent=2))

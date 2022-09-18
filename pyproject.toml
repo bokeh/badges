@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=64"]
+requires = ["setuptools>=64", "types-requests"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -12,6 +12,7 @@ dependencies = [
     "click",
     "dask[dataframe]",
     "fastparquet",
+    "requests",
     "s3fs",
 ]
 authors = [
@@ -36,13 +37,14 @@ classifiers = [
 repository = "https://github.com/bokeh/badges"
 
 [project.scripts]
-generate-conda-badges = "generate_conda_badges.__main__:main"
+generate-conda-badges = "generate_badges.conda.__main__:main"
+generate-so-badges = "generate_badges.stackoverflow.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.coverage.run]
-source = ["generate_conda_badges"]
+source = ["generate_badges"]
 
 [tool.isort]
 force_grid_wrap = 4
@@ -57,8 +59,8 @@ import_heading_thirdparty = "External imports"
 import_heading_firstparty = ""
 import_heading_localfolder = ""
 
-known_first_party = "generate_conda_badges"
-known_third_party= ["click", "dask", "s3fs"]
+known_first_party = "generate_badges"
+known_third_party= ["click", "dask", "requests", "s3fs"]
 
 [tool.mypy]
 python_version = "3.10"
