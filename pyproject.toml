@@ -44,6 +44,22 @@ where = ["src"]
 [tool.coverage.run]
 source = ["generate_conda_badges"]
 
+[tool.isort]
+force_grid_wrap = 4
+multi_line_output = 3
+combine_as_imports = true
+
+indented_import_headings = false
+include_trailing_comma = true
+
+import_heading_stdlib = "Standard library imports"
+import_heading_thirdparty = "External imports"
+import_heading_firstparty = ""
+import_heading_localfolder = ""
+
+known_first_party = "generate_conda_badges"
+known_third_party= ["click", "dask", "s3fs"]
+
 [tool.mypy]
 python_version = "3.10"
 files = ["src/generate-conda-badges", "tests"]

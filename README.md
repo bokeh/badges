@@ -2,9 +2,9 @@
 
 Generate and cache informational badges
 
-Install with `pip install .` 
+Install with `pip install .`
 
-### Conda 
+### Conda
 
 Monthly conda download badges can be generated with:
 ```bash
