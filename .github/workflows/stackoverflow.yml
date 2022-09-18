@@ -1,0 +1,41 @@
+name: update-stackoverflow-badge
+
+on:
+  schedule:
+    - cron: "0 12 2 * *"
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install generate-so-badges
+        run: |
+          pip install .
+
+      - name: Generate badge URL
+        run: |
+          echo "BADGE_URL=\"`generate-so-badges -t bokeh --logo stackoverflow -c D98B43 |jq -r '.bokeh'`\"" >> $GITHUB_ENV
+
+      - name: Print badge URL
+        run: |
+          echo "$BADGE_URL"
+
+      - name: Download badge SVG
+        run: |
+          wget ${{ env.BADGE_URL }} -O cache/bokeh-stackoverflow-total.svg
+
+      - name: Commit new badge SVG
+        run: |
+          git config --local user.name "bokeh"
+          git add cache/bokeh-stackoverflow-total.svg
+          git diff-index --quiet HEAD || git commit -m"update bokeh-stackoverflow-total.svg"
+          git push
