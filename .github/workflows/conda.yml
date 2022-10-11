@@ -2,7 +2,7 @@ name: update-conda-badge
 
 on:
   schedule:
-    - cron: "0 12 2 * *"
+    - cron: "0 12 12 * *"
 
   workflow_dispatch:
 
